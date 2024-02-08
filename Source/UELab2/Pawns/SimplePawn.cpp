@@ -19,7 +19,7 @@ ASimplePawn::ASimplePawn()
 	//CREATE scene component
 	SceneComponent = CreateDefaultSubobject<USceneComponent>(TEXT("SceneComponent"));
 	
-	//SET the Scene Component as the  Root Component
+	//SET the Scene Component as the Root Component
 	SetRootComponent(SceneComponent);
 	
 	//CREATE Static Mesh Component
@@ -60,7 +60,7 @@ void ASimplePawn::Tick(float DeltaTime)
 	//TODO: Implement the movement. Think about how the movement is done after you have written the implementation code. 
 	//IF the Controller is NOT null
 
-	if(Controller !=nullptr) 
+	if(Controller) 
 
 	{
 		//DECLARE a FRotator Rotation and Initialize it to pitch=0, roll=0 and the Yaw to the Controllers Yaw Rotation
@@ -71,11 +71,11 @@ void ASimplePawn::Tick(float DeltaTime)
 		FVector Direction = FVector::ZeroVector;
 
 		//IF the MoveForwardAmount is not zero
-		if(MoveForwardAmount > 0)
+		if(MoveForwardAmount !=0)
 
 		{
 			//SET the Direction to this Actors Location + FRotationMatrix(??).GetUnitAxis(??) * MoveForwardAmount * Velocity * DeltaTime
-			Direction = GetActorLocation() + FRotationMatrix(GetActorRotation()).GetUnitAxis(EAxis::X) * MoveForwardAmount * Velocity * DeltaTime;
+			Direction = GetActorLocation() + FRotationMatrix(Rotation).GetUnitAxis(EAxis::X) * MoveForwardAmount * Velocity * DeltaTime;
 
 			//SET this actors location to the Direction
 			SetActorLocation(Direction);
@@ -84,11 +84,11 @@ void ASimplePawn::Tick(float DeltaTime)
 		//ENDIF
 
 		//IF the MoveRightAmount is not zero
-		if(MoveRightAmount > 0)
+		if(MoveRightAmount != 0)
 
 		{
 			//SET the Direction to this Actors Location + FRotationMatrix(??).GetUnitAxis(??) * MoveRightAmount * Velocity * DeltaTime
-			Direction = GetActorLocation() + FRotationMatrix(GetActorRotation()).GetUnitAxis(EAxis::Y) * MoveRightAmount * Velocity * DeltaTime;
+			Direction = GetActorLocation() + FRotationMatrix(Rotation).GetUnitAxis(EAxis::Y) * MoveRightAmount * Velocity * DeltaTime;
 
 			//SET this actors location to the Direction
 			SetActorLocation(Direction);
@@ -107,7 +107,7 @@ void ASimplePawn::SetupPlayerInputComponent(UInputComponent* PlayerInputComponen
 
 	//TODO: Set up the Input Bindings. Be mindful of each input binding. What is the difference between the movement and looking around
 	//IF PlayerInputComponent Is Not null
-	if(PlayerInputComponent!= nullptr)
+	if(PlayerInputComponent)
 
 	{
 		//BIND axis "MoveForward" to this objects MoveForward() Function
@@ -130,7 +130,7 @@ void ASimplePawn::MoveForward(float Amount)
 	//TODO: Set the MoveForwardAmount, what are the values passed in
 	//ASSIGN Amount to MoveForwardAmount
 
-	Amount = MoveForwardAmount;
+	MoveForwardAmount = Amount;
 	
 }
 
@@ -139,7 +139,7 @@ void ASimplePawn::MoveRight(float Amount)
 	//TODO: Set the MoveRightAmount, what are the values passed in
 	//ASSIGN Amount to MoveRightAmount
 
-	Amount = MoveRightAmount;
+	MoveRightAmount = Amount;
 	
 }
 
