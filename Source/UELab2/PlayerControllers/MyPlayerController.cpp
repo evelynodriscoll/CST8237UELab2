@@ -47,11 +47,18 @@ void AMyPlayerController::ChangePawn()
 
 	//Get the CurrentPawn from the Array of Pawns at CurrentPawnIndex. The Pawns TArray holds Actors so you will have to Cast<T>(pass in actor) It
 
+
 	APawn* CurrentPawn;
-	CurrentPawn = Cast<APawn>(Pawns[CurrentPawnIndex]);
-	CurrentPawnIndex++;
 	
 	//SET the CurrentPawnIndex to the Next Pawn in the Pawns array, It will be used to change the pawn next time this action is performed
+
+	CurrentPawnIndex++;
+
+	if (CurrentPawnIndex >= Pawns.Num()) {
+		CurrentPawnIndex = 0; 
+	}
+
+	CurrentPawn = Cast<APawn>(Pawns[CurrentPawnIndex]);
 	
 	//IF the CurrentPawn is null
 
@@ -61,6 +68,7 @@ void AMyPlayerController::ChangePawn()
 	}
 	
 	//ENDIF
+
 
 	//POSSESS the CurrentPawn
 	Possess(CurrentPawn);
